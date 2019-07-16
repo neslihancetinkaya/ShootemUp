@@ -41,22 +41,26 @@ public class Director : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        createE1();
-        createE2();     
-        createE3();   
+        if(player.isActive){
+            createE1();
+            createE2();
+            createE3();
+        }   
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(countE1 < 2){
-            createE1();
-        }
-        if(countE2 < 2){
-            createE2();
-        }
-        if(countE3 < 2){
-            createE3();
+        if(player.isActive){
+            if(countE1 < 2){
+                createE1();
+            }
+            if(countE2 < 2){
+                createE2();
+            }
+            if(countE3 < 2){
+                createE3();
+            }
         }
     }
 }

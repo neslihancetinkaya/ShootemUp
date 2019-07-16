@@ -25,50 +25,53 @@ public abstract class NewEnemy : MonoBehaviour
 
     protected class Move : EnemyState
     {
-        public Move(NewEnemy enemy) : base(enemy) {
-            
+        public Move(NewEnemy enemy) : base(enemy) {            
         }
 
         public override void enter(State from){
-            // moveStart
             float randX = Random.Range(-enemy.xConstraint, enemy.xConstraint);
             float randY = Random.Range(-enemy.yConstraint, enemy.yConstraint);
-            enemy.motionTarget = new Vector3(randX, randY, 0f);
-            enemy.motionDirection = (enemy.motionTarget - enemy.transform.position).normalized;
-            enemy.counterMoveValue++;
+            if(enemy.player.isActive){
+                enemy.motionTarget = new Vector3(randX, randY, 0);
+                enemy.motionDirection = (enemy.motionTarget - enemy.transform.position).normalized;
+                enemy.counterMoveValue++;
+            }
         }
         public override void exit(State to){
 
         }
         public override State update(){
-            // moveUpdate
-            if((enemy.motionTarget - enemy.transform.position).magnitude <= enemy.radiusTarget){                
-                enter(this);
+            if(enemy.player.isActive){
+                if((enemy.motionTarget - enemy.transform.position).magnitude <= enemy.radiusTarget){
+                    enter(this);
+                }
+                else{
+                    enemy.transform.position += enemy.speedEnemy * enemy.motionDirection;
+                }
             }
             else{
-                enemy.transform.position += enemy.speedEnemy * enemy.motionDirection;
-            }
+                enemy.transform.position = enemy.transform.position;
+            }   
+
             return null;
         }
     }
 
     protected class Ram : EnemyState
     {
-        public Ram(NewEnemy enemy) : base(enemy) {
-            
+        public Ram(NewEnemy enemy) : base(enemy) {            
         }
 
         public override void enter(State from){
-            // ramStart
         }
-        public override void exit(State to){
-            
+        public override void exit(State to){            
         }
         public override State update(){
-            // ramUpdate
-            enemy.motionTarget = enemy.player.transform.position;
-            enemy.motionDirection = (enemy.motionTarget - enemy.transform.position).normalized;
-            enemy.transform.position += enemy.speedEnemy * enemy.motionDirection;
+            if(enemy.player.isActive){
+                enemy.motionTarget = enemy.player.transform.position;
+                enemy.motionDirection = (enemy.motionTarget - enemy.transform.position).normalized;
+                enemy.transform.position += enemy.speedEnemy * enemy.motionDirection;
+            }
             return null;
         }
     }
@@ -87,10 +90,9 @@ public abstract class NewEnemy : MonoBehaviour
             
         }
         public override State update(){   
+            
             enemy.transform.Rotate(0, Time.deltaTime * rotationMultiplier, 0);
-
             float t = Time.time - tick;
-
             enemy.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t); 
  
             if (t >= 1){
@@ -100,8 +102,6 @@ public abstract class NewEnemy : MonoBehaviour
         }
     } 
 
-    // Move move;
-    // Ram ram;
     protected StateMachine stateMachine = new StateMachine();
     abstract public void enemyStart(Player player);
     virtual public void destroy()

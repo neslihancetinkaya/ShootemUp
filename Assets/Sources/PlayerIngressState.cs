@@ -5,29 +5,26 @@ using static StateMachine;
 
 public partial class Player
 {
+    float ingressSpeed = 2;
     protected class IngressState : PlayerState
     {
-        float d = 5;
+        float d => player.ingressSpeed;
         Vector3 start;
         Vector3 end;
-
-        //bunu playerda ver?
-
         float t = 0;
         float newT;
         public IngressState(Player player) : base(player){
         }    
         public override void enter(State from){
             t = Time.time;
-            State nextState = player.pPlayState;
         } 
         public override void exit(State to){
-
+            
         }
         public override State update(){
             newT = Time.time -t;
-            Ingress(d);            
-            return null;
+            Ingress(d);  
+            return player.transform.position.y >= 0 ? player.pPlayState : null;            
         }
         public void Ingress(float duration){
             start = new Vector3(0, -player.yConstraint, 0);
