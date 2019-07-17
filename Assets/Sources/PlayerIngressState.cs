@@ -17,14 +17,15 @@ public partial class Player
         }    
         public override void enter(State from){
             t = Time.time;
+            //player.reset();
         } 
         public override void exit(State to){
-            
+            player.ingressCompleted();            
         }
         public override State update(){
             newT = Time.time -t;
-            Ingress(d);  
-            return player.transform.position.y >= 0 ? player.pPlayState : null;            
+            Ingress(d);
+            return player.transform.position.y >= 0 ? player.pPlayState : null;
         }
         public void Ingress(float duration){
             start = new Vector3(0, -player.yConstraint, 0);

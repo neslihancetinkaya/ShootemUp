@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class StateMachine
 {
-
+    public delegate void OnStateChanged(State to, State from);
+    public OnStateChanged onStateChanged = delegate {};
     public interface Decision{
         State decide(State currentState);
     }
@@ -40,6 +41,7 @@ public class StateMachine
                     _currentState.enter(oldState);
 
                 }
+                onStateChanged(_currentState, oldState);
             }
         }
         

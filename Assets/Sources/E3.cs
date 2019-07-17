@@ -6,6 +6,7 @@ public class E3 : NewEnemy
 {
     bool isE3Collide = false;
     public int E3HealthPoint = 3;
+    Wait wait;
     Ram ram;
     Move move;
     Destroyed destroyed;
@@ -31,15 +32,18 @@ public class E3 : NewEnemy
         destroyed = new Destroyed(this, 720);
         ram = new Ram(this);
         move = new Move(this);
+        wait = new Wait(this);
 
-        if(player.isActive){
-            stateMachine.currentState = move;        
-        }        
+        wait.nextState = move;
+
+        // stateMachine.currentState = move;    
+        stateMachine.currentState = wait;    
     }
 
     protected override void Update()
     {
         base.Update();
+        //del
         if(player.isActive){
             if((motionTarget - transform.position).magnitude <= radiusTarget){
                stateMachine.currentState = move;

@@ -204,12 +204,11 @@ MonoBehaviour:
   yConstraint: 950
   tick: 0
   delay: 0.3
-  rotationMultiplier: 720
-  speedPlayer: 500
+  speedPlayer: 800
   maxCountLaser: 15
+  healthPlayer: 3
   lifePlayer: 3
-  isActive: 1
-  t: 0
+  aaaa: 0
 --- !u!212 &382057587
 SpriteRenderer:
   m_ObjectHideFlags: 0

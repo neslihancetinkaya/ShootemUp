@@ -16,13 +16,19 @@ public partial class Player
             tick = Time.time;
         } 
         public override void exit(State to){
+            player.reset();
         }
         public override State update(){
             player.transform.Rotate(Time.deltaTime * rotationMultiplier, 0, 0);
             float t = Time.time - tick;
             player.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
             if(t >= 1){
-                player.destroy();
+                if(player.lifePlayer > 0){
+                    return player.ingressState;
+                }
+                else {
+                    player.destroy();
+                }
             }
             return null;
         }

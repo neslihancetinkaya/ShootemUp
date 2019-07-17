@@ -6,6 +6,7 @@ public class E2 : NewEnemy
 {
     bool isE2Collide = false;
     public int E2HealthPoint = 2;
+    Wait wait;
     Ram ram;
     Destroyed destroyed;
    
@@ -28,10 +29,11 @@ public class E2 : NewEnemy
         this.player = player;    
         destroyed = new Destroyed(this, 720);
         ram = new Ram(this);
+        wait = new Wait(this);
+
+        wait.nextState = ram;
         
-        if(player.isActive){
-            stateMachine.currentState = ram; 
-        }
+        stateMachine.currentState = wait; 
     }
     
     // Update is called once per frame

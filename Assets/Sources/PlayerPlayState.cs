@@ -8,8 +8,10 @@ public partial class Player
     void OnCollisionEnter2D(Collision2D collision){
         NewEnemy enemy = collision.gameObject.GetComponent<NewEnemy>();
         if(enemy != null && enemy.hit(3)){
-            lifePlayer--;
-            if(lifePlayer <= 0){
+            healthPlayer--;
+            if(healthPlayer <= 0){
+                healthPlayer = 3;
+                lifePlayer--;
                 player.stateMachine.currentState = player.destroyState;
             }
             else {
@@ -36,12 +38,14 @@ public partial class Player
 
         public override void enter(State from){
             player.fireLaserDelegate = createGreenLaser;
+            player.activeStateChanged(true);
             // player.fireLaserDelegate += Osman;
         }   
         // void Osman(){
         //     Debug.Log("osman");
         // }
         public override void exit(State to){
+            player.activeStateChanged(false);
             
         }
         public override State update(){

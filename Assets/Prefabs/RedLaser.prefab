@@ -97,7 +97,7 @@ MonoBehaviour:
   player: {fileID: 0}
   startTime: 0
   elapsedTime: 0
-  speedLaser: 800
+  speedLaser: 1500
   damage: 2
 --- !u!61 &-3181378012832309466
 BoxCollider2D:

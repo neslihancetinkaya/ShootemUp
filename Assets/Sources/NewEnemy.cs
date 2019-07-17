@@ -25,23 +25,27 @@ public abstract class NewEnemy : MonoBehaviour
 
     protected class Move : EnemyState
     {
-        public Move(NewEnemy enemy) : base(enemy) {            
+        public Move(NewEnemy enemy) : base(enemy) {
+        }
+
+        void activate(bool active)
+        {
+
         }
 
         public override void enter(State from){
             float randX = Random.Range(-enemy.xConstraint, enemy.xConstraint);
             float randY = Random.Range(-enemy.yConstraint, enemy.yConstraint);
-            if(enemy.player.isActive){
-                enemy.motionTarget = new Vector3(randX, randY, 0);
-                enemy.motionDirection = (enemy.motionTarget - enemy.transform.position).normalized;
-                enemy.counterMoveValue++;
-            }
+            enemy.motionTarget = new Vector3(randX, randY, 0);
+            enemy.motionDirection = (enemy.motionTarget - enemy.transform.position).normalized;
+            enemy.counterMoveValue++;
         }
         public override void exit(State to){
-
         }
+        
         public override State update(){
             if(enemy.player.isActive){
+
                 if((enemy.motionTarget - enemy.transform.position).magnitude <= enemy.radiusTarget){
                     enter(this);
                 }
@@ -101,6 +105,25 @@ public abstract class NewEnemy : MonoBehaviour
             return null;
         }
     } 
+
+    protected class Wait : EnemyState
+    {
+        public State nextState;
+        public Wait(NewEnemy enemy) : base(enemy){
+
+        }
+        public override void enter(State from){
+
+        }
+
+        public override void exit(State to){
+
+        }
+
+        public override State update(){
+            return enemy.player.isActive ? nextState : null;
+        }
+    }
 
     protected StateMachine stateMachine = new StateMachine();
     abstract public void enemyStart(Player player);
