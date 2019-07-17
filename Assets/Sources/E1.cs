@@ -13,7 +13,9 @@ public class E1 : NewEnemy
     public override bool hit(int damage){
         if (!isE1Collide) {
             E1HealthPoint = E1HealthPoint - damage;
+            director.score += scorePayloadWhenHit;
             if(E1HealthPoint <= 0){
+                director.score += scorePayloadWhenDestroyed;
                 Director.countE1--;
                 isE1Collide = true;
                 E1HealthPoint = 1;
@@ -26,8 +28,9 @@ public class E1 : NewEnemy
     
     
   
-    public override void enemyStart(Player player)
+    public override void enemyStart(Director director, Player player)
     {
+        this.director = director;
         this.player = player;
         destroyed = new Destroyed(this, 720);
         move = new Move(this);

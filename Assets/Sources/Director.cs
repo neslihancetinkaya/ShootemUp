@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static StateMachine;
 
 public class Director : MonoBehaviour
 {
+    public Text scoreDisplay;
     public Player player;
     public GameObject E1Prefab;
     public GameObject E2Prefab;
@@ -14,6 +16,7 @@ public class Director : MonoBehaviour
     public static int countE1 = 1;
     public static int countE2 = 1;
     public static int countE3 = 1;
+    
     StateMachine stateMachine = new StateMachine();
 
     public abstract class DirectorState : State
@@ -31,6 +34,7 @@ public class Director : MonoBehaviour
         }
 
         public override void enter(State from){
+            director.score = 0;
             director.player.ingressCompleted += playerIngressCompletedHandler;
             director.player.ingress();
             //enmey create
@@ -94,7 +98,7 @@ public class Director : MonoBehaviour
         float randX = Random.Range(-xConstraint, xConstraint);
         float randY = Random.Range(-yConstraint, yConstraint);
         GameObject go = Instantiate(E1Prefab, new Vector3(randX, randY, 0f), Quaternion.identity) as GameObject;
-        go.GetComponent<E1>().enemyStart(player);
+        go.GetComponent<E1>().enemyStart(this, player);
         countE1++;
     }
 
@@ -102,7 +106,7 @@ public class Director : MonoBehaviour
         float randX = Random.Range(-xConstraint, xConstraint);
         float randY = Random.Range(-yConstraint, yConstraint);
         GameObject go = Instantiate(E2Prefab, new Vector3(randX, randY, 0),Quaternion.identity) as GameObject;
-        go.GetComponent<E2>().enemyStart(player);
+        go.GetComponent<E2>().enemyStart(this, player);
         countE2++;
     }
 
@@ -110,8 +114,19 @@ public class Director : MonoBehaviour
         float randX = Random.Range(-xConstraint, xConstraint);
         float randY = Random.Range(-yConstraint, yConstraint);
         GameObject go = Instantiate(E3Prefab, new Vector3(randX, randY, 0),Quaternion.identity) as GameObject;
-        go.GetComponent<E3>().enemyStart(player);
+        go.GetComponent<E3>().enemyStart(this, player);
         countE3++;
+    }
+
+    int _score = 0;
+
+    public int score{
+        get => _score;
+        set {
+            Debug.Log("Score : " + value + " " + (value - _score));
+            _score = value;
+            scoreDisplay.text = "Score : " + _score;
+        }
     }
 
     void Awake()

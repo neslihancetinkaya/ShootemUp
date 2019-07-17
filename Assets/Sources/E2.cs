@@ -13,7 +13,9 @@ public class E2 : NewEnemy
     public override bool hit(int damage){
         if (!isE2Collide) {
             E2HealthPoint = E2HealthPoint - damage;
+            director.score += scorePayloadWhenHit;
             if(E2HealthPoint <= 0){
+                director.score += scorePayloadWhenDestroyed;
                 Director.countE2--;
                 isE2Collide = true;
                 E2HealthPoint = 2;
@@ -25,7 +27,9 @@ public class E2 : NewEnemy
     }
 
     // Start is called before the first frame update
-    public override void enemyStart(Player player){
+    public override void enemyStart(Director director, Player player)
+    {
+        this.director = director;
         this.player = player;    
         destroyed = new Destroyed(this, 720);
         ram = new Ram(this);

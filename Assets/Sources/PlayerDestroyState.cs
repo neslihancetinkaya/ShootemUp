@@ -23,7 +23,7 @@ public partial class Player
             float t = Time.time - tick;
             player.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
             if(t >= 1){
-                if(player.lifePlayer > 0){
+                if(player.life > 0){
                     return player.ingressState;
                 }
                 else {

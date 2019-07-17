@@ -7,12 +7,15 @@ public abstract class NewEnemy : MonoBehaviour
     Vector3 motionDirection = new Vector3();
     protected Vector3 motionTarget = new Vector3();
     public Player player;
+    public Director director;
     public float radiusTarget = 100f;
     public float xConstraint = Director.xConstraint;
     public float yConstraint = Director.yConstraint;
     public int counterMoveValue = 0;
     public int speedEnemy = 8;
     public int targetMoveValue = 2;
+    public int scorePayloadWhenHit;
+    public int scorePayloadWhenDestroyed;
     abstract public bool hit(int damage);
 
     protected abstract class EnemyState : State
@@ -126,7 +129,7 @@ public abstract class NewEnemy : MonoBehaviour
     }
 
     protected StateMachine stateMachine = new StateMachine();
-    abstract public void enemyStart(Player player);
+    abstract public void enemyStart(Director director, Player player);
     virtual public void destroy()
     {
         Destroy(gameObject, 0f);

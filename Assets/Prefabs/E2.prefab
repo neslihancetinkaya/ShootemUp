@@ -95,13 +95,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  director: {fileID: 0}
   radiusTarget: 100
-  xConstaint: 1850
+  xConstraint: 1850
   yConstraint: 950
-  targetMoveValue: 2
   counterMoveValue: 0
   speedEnemy: 8
-  currentState: 1
+  targetMoveValue: 2
+  scorePayloadWhenHit: 2
+  scorePayloadWhenDestroyed: 20
+  E2HealthPoint: 2
 --- !u!50 &5092572314655907131
 Rigidbody2D:
   serializedVersion: 4

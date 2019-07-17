@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static StateMachine;
 
 public partial class Player : MonoBehaviour
 {
+    public Text healthPointDisplay;
+    public Text lifeDisplay;
     public delegate void IngressCompleted();
     public delegate void ActiveStateChanged(bool active);
     delegate void FireLaserDelegate();
@@ -41,7 +44,7 @@ public partial class Player : MonoBehaviour
     DestroyState destroyState;
     StateMachine stateMachine = new StateMachine();
 
-    public bool isActive => stateMachine.currentState == pPlayState;
+    public bool isActive => stateMachine.currentState == pPlayState;    
 
     virtual public void destroy()
     {
@@ -59,6 +62,28 @@ public partial class Player : MonoBehaviour
     {
         stateMachine.currentState = ingressState;
     }
+
+    int _lifePlayer = 0;
+
+    public int life{
+        get => _lifePlayer;
+        set{
+            Debug.Log("Life : " + value + " " + (value - _lifePlayer));
+            _lifePlayer = value;
+            lifeDisplay.text = "Life : " + _lifePlayer;
+        }
+    }
+
+    int _health = 0;
+
+    public int health{
+        get => _health;
+        set{
+            Debug.Log("Health : " + value + " " + (value - _health));
+            _health = value;
+            healthPointDisplay.text = "Health : " + _health;
+        }
+    }
     
     // Start is called before the first frame update
     void Awake()
@@ -66,6 +91,8 @@ public partial class Player : MonoBehaviour
         pPlayState = new PPlayState(this);
         ingressState = new IngressState(this);
         destroyState = new DestroyState(this);
+        life = lifePlayer;
+        health = healthPlayer;
     }
 
     public bool aaaa = false;
