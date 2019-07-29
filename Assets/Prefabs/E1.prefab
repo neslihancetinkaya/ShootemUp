@@ -104,6 +104,9 @@ MonoBehaviour:
   targetMoveValue: 5
   scorePayloadWhenHit: 1
   scorePayloadWhenDestroyed: 10
+  sfxDestroyed: {fileID: 8300000, guid: 07a11a72188154a49885a702933726b5, type: 3}
+  minCount: 2
+  count: 2
   E1HealthPoint: 1
 --- !u!50 &9151160036864042294
 Rigidbody2D:

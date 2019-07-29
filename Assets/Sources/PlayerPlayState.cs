@@ -8,6 +8,7 @@ public partial class Player
     void OnCollisionEnter2D(Collision2D collision){
         NewEnemy enemy = collision.gameObject.GetComponent<NewEnemy>();
         if(enemy != null && enemy.hit(3)){
+           // return;
             health--;
             if(health <= 0){
                 health = 3;

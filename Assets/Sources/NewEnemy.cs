@@ -16,7 +16,15 @@ public abstract class NewEnemy : MonoBehaviour
     public int targetMoveValue = 2;
     public int scorePayloadWhenHit;
     public int scorePayloadWhenDestroyed;
+    
+    public AudioClip sfxDestroyed;
     abstract public bool hit(int damage);
+
+
+    public int minCount = 2;
+    public int count = 2;
+    protected Director.EnemyParameters parameters;
+
 
     protected abstract class EnemyState : State
     {
@@ -92,6 +100,8 @@ public abstract class NewEnemy : MonoBehaviour
         }
         public override void enter(State from){
             tick = Time.time;
+            enemy.director.playAudio(enemy.sfxDestroyed);
+
         }
         public override void exit(State to){
             
@@ -129,7 +139,7 @@ public abstract class NewEnemy : MonoBehaviour
     }
 
     protected StateMachine stateMachine = new StateMachine();
-    abstract public void enemyStart(Director director, Player player);
+    abstract public void enemyStart(Director director, Director.EnemyParameters parameters, Player player);
     virtual public void destroy()
     {
         Destroy(gameObject, 0f);

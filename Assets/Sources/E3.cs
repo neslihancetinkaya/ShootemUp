@@ -18,7 +18,7 @@ public class E3 : NewEnemy
             director.score += scorePayloadWhenHit;
             if(E3HealthPoint <= 0){
                 director.score += scorePayloadWhenDestroyed;
-                Director.countE3--;
+                parameters.count--;
                 isE3Collide = true;
                 E3HealthPoint = 3;
                 stateMachine.currentState = destroyed;
@@ -28,10 +28,11 @@ public class E3 : NewEnemy
         return false;
     }
 
-    public override void enemyStart(Director director, Player player)
+    public override void enemyStart(Director director,Director.EnemyParameters parameters, Player player)
     {
         this.director = director;
         this.player = player;    
+        this.parameters = parameters;
         destroyed = new Destroyed(this, 720);
         ram = new Ram(this);
         move = new Move(this);

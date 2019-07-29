@@ -16,7 +16,7 @@ public class E2 : NewEnemy
             director.score += scorePayloadWhenHit;
             if(E2HealthPoint <= 0){
                 director.score += scorePayloadWhenDestroyed;
-                Director.countE2--;
+                parameters.count--;
                 isE2Collide = true;
                 E2HealthPoint = 2;
                 stateMachine.currentState = destroyed;
@@ -27,10 +27,11 @@ public class E2 : NewEnemy
     }
 
     // Start is called before the first frame update
-    public override void enemyStart(Director director, Player player)
+    public override void enemyStart(Director director,Director.EnemyParameters parameters, Player player)
     {
         this.director = director;
-        this.player = player;    
+        this.player = player;  
+        this.parameters = parameters;  
         destroyed = new Destroyed(this, 720);
         ram = new Ram(this);
         wait = new Wait(this);
